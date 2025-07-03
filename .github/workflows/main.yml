@@ -25,8 +25,10 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name | lower }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name | lower }}:${{ github.sha }}
+          build-args: |
+            REPO_NAME=${{ github.event.repository.name | lower }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
