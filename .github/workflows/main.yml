@@ -1,43 +1,38 @@
-name: Test and Deploy
+name: Teste e Deploy
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main # Or your default branch like 'master'
 
 jobs:
-  test:
+  test_and__build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          
+          node-version: "20" # Or your desired Node.js version
+
       - name: Install dependencies
-        run: npm install
-      
-      - name: Run tests
+        run: npm ci # Use 'npm ci' for clean installs in CI environments
+
+      - name: Run tests with Jest
         run: npm test
 
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-      
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      
+      - name: Build to GitHub Pages
+        run: |
+          npm run build # Assuming you have a 'build' script in your package.json
+        env:
+          NODE_ENV: production # Set environment for production build
+
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build # Adjust this to your build output directory (e.g., 'dist', 'public')
+          # cname: example.com # Uncomment and set if you have a custom domain
