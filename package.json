@@ -1,0 +1,23 @@
+{
+  "name": "cicd-atividade-grupo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zoldyako/cicd-atividade-grupo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zoldyako/cicd-atividade-grupo/issues"
+  },
+  "homepage": "https://github.com/Zoldyako/cicd-atividade-grupo#readme",
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.4"
+  }
+}
